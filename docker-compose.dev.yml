@@ -1,9 +1,21 @@
 services:
+  server:
+    build: ./server
+    ports:
+      - 5050:5000
+    command: npm run dev
+    volumes:
+      - ./server/src/:/app/src/
+  mongodb:
+    image: mongo
+    volumes: 
+      - ./data:/data/db
   client:
     build:
       context: ./client
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
+    ports: 
+      - 8080:3000
+    command: npm start
     volumes:
-      - ./client/src:/app/src
-    ports:
-      - "8080:80"
+      - ./client/src/:/app/src/
